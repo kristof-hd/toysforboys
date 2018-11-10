@@ -84,6 +84,10 @@ public class Order implements Serializable {
 		return status; 
 	}
 	
+	public void setStatus(Status status) {
+		this.status=status; 
+	}
+	
 	public long getVersion() {
 		return version;
 	}

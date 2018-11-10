@@ -38,7 +38,7 @@
 										<td>${order.requiredDate}</td>
 										<td>${order.customer.name}</td>																
 										<td>${order.comments}</td>
-										<td>${order.status}</td>
+										<td><img src='images/${order.status}.png' alt='{order.status}'>${order.status}</td>
 										<td>
 											<input type='checkbox' name='shipid' value='${order.id}'>						
 										</td>
