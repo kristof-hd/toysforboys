@@ -63,4 +63,7 @@ public class Product implements Serializable {
 	
 	protected Product() {
 	}
+
+
+
 }

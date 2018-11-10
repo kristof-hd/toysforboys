@@ -3,37 +3,40 @@
 <!doctype html>
 <html lang='nl'>
 <head>
-<title>${order.id}</title>
+	<title>${order.id}</title>
+	<link rel='icon' href='images/toysforboys.ico' type='image/x-icon'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+	<link rel='stylesheet' href='<c:url value="/css/toysforboys.css"/>'> 
 </head>
 <body>
-<h1>${order.id}</h1>
-
-${order.id} 
-${order.orderDate} 
-${order.requiredDate} 
-${order.customer.name} 
-${order.customer.adress.streetAndNumber}
-${order.customer.adress.postalCode} 
-${order.customer.adress.city} 
-${order.customer.adress.state} 
-${order.customer.country.name}
-${order.comments} 
-
-<%-- ${order.orderDetails.product.name} --%>
-
-<ul>
-	<c:forEach var="orderdetail" items="${order.orderDetails}">
-		<li>${orderdetail.product.name} ${orderdetail.quantityOrdered}</li>
-	</c:forEach>
-</ul>
-
-
-
-<!-- <ul> -->
-<%-- <c:forEach var="track" items="${album.tracks}"> --%>
-<%-- <li>${track.naam} ${track.tijd}</li> --%>
-<%-- </c:forEach> --%>
-<!-- </ul> -->
+<h1>Order ${order.id}</h1>
+<dl>
+	<dt>Ordered:</dt>
+	<dd>${order.orderDate}</dd> 
+	<dt>Required:</dt>
+	<dd>${order.requiredDate}</dd> 
+	<dt>Customer:</dt>
+	<dd>${order.customer.name} <br> 
+		${order.customer.adress.streetAndNumber} <br>
+		${order.customer.adress.postalCode} <br>
+		${order.customer.adress.city} 
+		${order.customer.adress.state} <br> 
+		${order.customer.country.name}</dd>
+	<dt>Comments:</dt>
+	<dd>${order.comments}</dd> 
+	<dt>Details:</dt>
+	<ul>
+		<c:forEach var="orderdetail" items="${order.orderDetails}">
+			<li>${orderdetail.product.name} ${orderdetail.priceEach} ${orderdetail.quantityOrdered} ${orderdetail.value} 
+							<c:choose>
+								<c:when test='${orderdetail.deliverable}'>&check;</c:when>
+								<c:otherwise>&cross;</c:otherwise>
+							</c:choose>
+			</li>
+		</c:forEach>
+	</ul>
+</dl>
+Total value: ${order.totalValue}
 
 </body>
 </html>

@@ -1,6 +1,7 @@
 package be.vdab.toysforboysWebApplication.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -102,5 +103,10 @@ public class Order implements Serializable {
 	}
 	
 	protected Order() {
+	}
+	
+	public BigDecimal getTotalValue() {
+		return orderDetails.stream().map(orderdetail -> orderdetail.getValue())
+				.reduce(BigDecimal.ZERO, (vorigTotaal, huidigeWaarde)->vorigTotaal.add(huidigeWaarde));
 	}
 }

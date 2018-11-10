@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import be.vdab.toysforboysWebApplication.entities.Product;
 
@@ -20,6 +21,9 @@ public class OrderDetail implements Serializable {
 	@JoinColumn(name="productId")
 	private Product product; 
 	
+	@Transient
+	private boolean deliverable; 
+	
 	public OrderDetail() {
 	}
 
@@ -33,6 +37,14 @@ public class OrderDetail implements Serializable {
 
 	public BigDecimal getPriceEach() {
 		return priceEach;
+	}
+	
+	public BigDecimal getValue() {
+		return BigDecimal.valueOf(quantityOrdered).multiply(priceEach); 
+	}
+	
+	public boolean isDeliverable() {
+		return quantityOrdered<=product.getQuantityInStock(); 
 	}
 
 }
