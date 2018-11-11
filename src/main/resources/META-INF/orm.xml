@@ -6,7 +6,7 @@
 http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
 	version="2.1">
  
-	<named-query name='Order.findAll'>
+	<named-query name='Order.findAllUnshippedOrders'>
 		<query>
 			select o from Order o
 			where o.status not in ('SHIPPED', 'CANCELLED')

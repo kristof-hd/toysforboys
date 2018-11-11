@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.toysforboysWebApplication.enums.Status;
+import be.vdab.toysforboysWebApplication.exceptions.ShippingException;
 import be.vdab.toysforboysWebApplication.services.OrderService;
 
 @Controller
@@ -15,7 +16,7 @@ class IndexController {
 	
 	private final static String VIEW="index"; 
 	private final OrderService orderService; 
-	private static final String REDIRECT_NA_VERWIJDEREN="redirect:/";
+	private static final String REDIRECT_NA_SET_AS_SHIPPED="redirect:/";
 
 	IndexController(OrderService orderService) {
 		this.orderService=orderService;
@@ -23,17 +24,21 @@ class IndexController {
 	
 	@GetMapping
 	ModelAndView orders() {
-		return new ModelAndView(VIEW, "orders", orderService.findAll()); 
+		return new ModelAndView(VIEW, "orders", orderService.findAllUnshippedOrders()); 
 	}
 
 	@PostMapping
-	String actionsSetAsShipped(long[] shipid) {
+	ModelAndView actionsSetAsShipped(long[] shipid) {
+		ModelAndView modelAndView = new ModelAndView(VIEW); 
 		if(shipid!=null) {
 			for (long id: shipid) {
-				orderService.setStatus(id, Status.SHIPPED);
+				try {orderService.setStatus(id, Status.SHIPPED);}
+				catch (ShippingException ex) {ex.getMessage();}
 			}
-		}		
-		return REDIRECT_NA_VERWIJDEREN; 
+		}
+		modelAndView.addObject("orders", orderService.findAllUnshippedOrders());
+		modelAndView.addObject("unshippableOrders", orderService.getUnshippableOrders());
+		return modelAndView; 
 	}	
 	
 }

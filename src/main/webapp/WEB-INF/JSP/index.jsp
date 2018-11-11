@@ -12,6 +12,11 @@
 </head>
 <body>
 	<h1>Unshipped orders</h1>
+	
+	<c:forEach items='${unshippableOrders}' var='unshippableOrder'>
+		<p>Shopping failed for order ${unshippableOrder }, not enough stock.</p>
+	</c:forEach>
+	
 					<c:url value='/' var='url'/>
 					<form:form action='${url}' method='post'>
 						<input type='submit' value='Set as shipped'>

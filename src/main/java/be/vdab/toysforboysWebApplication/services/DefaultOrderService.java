@@ -1,5 +1,7 @@
 package be.vdab.toysforboysWebApplication.services;
 
+import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -19,14 +21,20 @@ import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
 @Service
 @Transactional(readOnly=true, isolation=Isolation.READ_COMMITTED)
 class DefaultOrderService implements OrderService {
+	private Set<Long> unshippableOrders=new LinkedHashSet<>(); 
 	private final OrderRepository orderRepository;
 	DefaultOrderService(OrderRepository orderRepository) {
 		this.orderRepository=orderRepository; 
 	}
 	
 	@Override
-	public List<Order> findAll() {
-		return orderRepository.findAll(); 
+	public Set<Long> getUnshippableOrders() {
+		return unshippableOrders;
+	}
+	
+	@Override
+	public List<Order> findAllUnshippedOrders() {
+		return orderRepository.findAllUnshippedOrders(); 
 	}
 	
 	@Override
@@ -40,24 +48,21 @@ class DefaultOrderService implements OrderService {
 		Optional<Order> optionalOrder = orderRepository.read(id); 
 		if(optionalOrder.isPresent()) {
 			optionalOrder.get().setStatus(status);
+			optionalOrder.get().setShippedDate(LocalDate.now());					
 			Set<OrderDetail> orderDetails = optionalOrder.get().getOrderDetails();
 			for (OrderDetail detail : orderDetails) {
 				Product product = detail.getProduct();
-				if(product.getQuantityInStock() < detail.getQuantityOrdered()) {
+				product.setQuantityInOrder(product.getQuantityInOrder()-detail.getQuantityOrdered()); 
+				product.setQuantityInStock(product.getQuantityInStock()-detail.getQuantityOrdered());
+				//if(product.getQuantityInStock() < detail.getQuantityOrdered())
+				if(product.getQuantityInStock() < 0) {
+					System.out.println("an unshippable order");
+					unshippableOrders.add(id); 
 					throw new ShippingException(); 
-				}
-				else {
-					product.setQuantityInOrder(product.getQuantityInOrder()-detail.getQuantityOrdered()); 
-					product.setQuantityInStock(product.getQuantityInStock()-detail.getQuantityOrdered());
-				}
+ 				}
 			}
 		} else {
 			throw new OrderNotFoundException(); 
 		}
-//		Optional<Product> optionalProduct = productRepository.read(id); 
-//		if(optionalProduct.isPresent()) {
-//			optionalProduct.get().
-//		}
-
 	}
 }

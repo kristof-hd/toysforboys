@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import be.vdab.toysforboysWebApplication.enums.Status;
 import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
@@ -52,6 +53,9 @@ public class Order implements Serializable {
 	@CollectionTable(name="orderdetails", joinColumns=@JoinColumn(name="orderid"))
 	private Set<OrderDetail> orderDetails; 
 	
+	@Transient
+	private boolean shippable; 
+	
 	public long getId() {
 		return id;
 	}
@@ -67,6 +71,10 @@ public class Order implements Serializable {
 	public LocalDate getShippedDate() {
 		return shippedDate;
 	}
+	
+	public void setShippedDate(LocalDate shippedDate) {
+		this.shippedDate=shippedDate;
+	}	
 	
 	public String getComments() {
 		return comments;
@@ -95,6 +103,14 @@ public class Order implements Serializable {
 	public Set<OrderDetail> getOrderDetails() {
 		return Collections.unmodifiableSet(orderDetails); 
 	}
+	
+//	public boolean isShippable() {
+//		return shippable; 
+//	}
+//	
+//	public void setOrderAsShippable() {
+//		this.shippable=true; 
+//	}
 	
 	public Order(LocalDate orderDate, LocalDate requiredDate, LocalDate shippedDate, String comments, Customer customer, Status status) {
 		this.orderDate=orderDate;

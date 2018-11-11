@@ -52,8 +52,8 @@ public class JpaOrderRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	}
 
 	@Test
-	public void findAll() {
-		List<Order> orders = repository.findAll();
+	public void findAllUnshippedOrder() {
+		List<Order> orders = repository.findAllUnshippedOrders();
 		manager.clear();
 		assertEquals(super.countRowsInTableWhere(ORDERS, "status not in ('SHIPPED', 'CANCELLED')"), orders.size());
 		//where o.status not in ('SHIPPED', 'CANCELLED')

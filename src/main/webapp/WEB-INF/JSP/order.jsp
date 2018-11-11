@@ -18,9 +18,7 @@
 	<dt>Customer:</dt>
 	<dd>${order.customer.name} <br> 
 		${order.customer.adress.streetAndNumber} <br>
-		${order.customer.adress.postalCode} <br>
-		${order.customer.adress.city} 
-		${order.customer.adress.state} <br> 
+		${order.customer.adress.postalCode} ${order.customer.adress.city} ${order.customer.adress.state} <br> 
 		${order.customer.country.name}</dd>
 	<dt>Comments:</dt>
 	<dd>${order.comments}</dd> 
