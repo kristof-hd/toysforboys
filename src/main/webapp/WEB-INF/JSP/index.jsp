@@ -12,7 +12,7 @@
 </head>
 <body>
 	<h1>Unshipped orders</h1>
-					<c:url value='test' var='url'/>
+					<c:url value='/' var='url'/>
 					<form:form action='${url}' method='post'>
 						<input type='submit' value='Set as shipped'>
 						<table>
@@ -29,20 +29,20 @@
 							</thead>
 							<tbody>
 								<c:forEach items='${orders}' var='order'>
-									<spring:url var='url' value='/orders/{id}'>
-										<spring:param name='id' value='${order.id}'/>
-									</spring:url>
-									<tr>
-										<td><a href='${url}'>${order.id}</a></td> 
-										<td>${order.orderDate}</td>
-										<td>${order.requiredDate}</td>
-										<td>${order.customer.name}</td>																
-										<td>${order.comments}</td>
-										<td><img src='images/${order.status}.png' alt='{order.status}'>${order.status}</td>
-										<td>
-											<input type='checkbox' name='shipid' value='${order.id}'>						
-										</td>
-									</tr>
+										<spring:url var='url' value='/orders/{id}'>
+											<spring:param name='id' value='${order.id}'/>
+										</spring:url>
+										<tr>
+											<td><a href='${url}'>${order.id}</a></td> 
+											<td>${order.orderDate}</td>
+											<td>${order.requiredDate}</td>
+											<td>${order.customer.name}</td>																
+											<td>${order.comments}</td>
+											<td><img src='images/${order.status}.png' alt='{order.status}'>${order.status}</td>
+											<td>
+												<input type='checkbox' name='shipid' value='${order.id}'>						
+											</td>
+										</tr>
 								</c:forEach>
 
 							</tbody>

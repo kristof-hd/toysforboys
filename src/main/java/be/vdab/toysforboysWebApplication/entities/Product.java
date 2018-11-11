@@ -54,6 +54,16 @@ public class Product implements Serializable {
 	public long getQuantityInOrder() {
 		return quantityInOrder;
 	}
+	
+	public void setQuantityInOrder(long quantityInOrder) {
+		this.quantityInOrder=quantityInOrder;
+	}
+
+	public void setQuantityInStock(long quantityInStock) {
+		this.quantityInStock=quantityInStock;
+	}
+
+	
 	public BigDecimal getBuyPrice() {
 		return buyPrice;
 	}

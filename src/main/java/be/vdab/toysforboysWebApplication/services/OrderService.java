@@ -9,5 +9,5 @@ import be.vdab.toysforboysWebApplication.enums.Status;
 public interface OrderService {
 	List<Order> findAll();
 	Optional<Order> read(long id); 
-	//void setStatus(long id, Status status); 
+	void setStatus(long id, Status status); 
 }

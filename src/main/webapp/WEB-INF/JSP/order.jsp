@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang='nl'>
 <head>
-	<title>${order.id}</title>
+	<title>Toys for boys - Order ${order.id}</title>
 	<link rel='icon' href='images/toysforboys.ico' type='image/x-icon'>
 	<meta name='viewport' content='width=device-width,initial-scale=1'>
 	<link rel='stylesheet' href='<c:url value="/css/toysforboys.css"/>'> 

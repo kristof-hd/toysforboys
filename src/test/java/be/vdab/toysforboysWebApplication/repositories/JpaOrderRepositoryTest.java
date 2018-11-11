@@ -55,7 +55,8 @@ public class JpaOrderRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	public void findAll() {
 		List<Order> orders = repository.findAll();
 		manager.clear();
-		assertEquals(super.countRowsInTable(ORDERS), orders.size());
+		assertEquals(super.countRowsInTableWhere(ORDERS, "status not in ('SHIPPED', 'CANCELLED')"), orders.size());
+		//where o.status not in ('SHIPPED', 'CANCELLED')
 //String vorigeNaam = "";
 //for (Album album : albums) {
 //assertTrue(album.getNaam().compareToIgnoreCase(vorigeNaam) >= 0);
