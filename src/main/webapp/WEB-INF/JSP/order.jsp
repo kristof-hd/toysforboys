@@ -1,5 +1,6 @@
 <%@ page contentType='text/html' pageEncoding='UTF-8' session='false'%>
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
+<%@taglib prefix='spring' uri='http://www.springframework.org/tags'%>
 <!doctype html>
 <html lang='nl'>
 <head>
@@ -23,16 +24,36 @@
 	<dt>Comments:</dt>
 	<dd>${order.comments}</dd> 
 	<dt>Details:</dt>
-	<ul>
-		<c:forEach var="orderdetail" items="${order.orderDetails}">
-			<li>${orderdetail.product.name} ${orderdetail.priceEach} ${orderdetail.quantityOrdered} ${orderdetail.value} 
-							<c:choose>
-								<c:when test='${orderdetail.deliverable}'>&check;</c:when>
-								<c:otherwise>&cross;</c:otherwise>
-							</c:choose>
-			</li>
-		</c:forEach>
-	</ul>
+						<table>
+							<thead>
+								<tr>
+									<th>Product</th>
+									<th>Price each</th>
+									<th>Quantity</th>
+									<th>Value</th>
+									<th>Deliverable</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items='${order.orderDetails}' var='orderdetail'>
+										<tr>
+											<td>${orderdetail.product.name}</td> 
+											<td><spring:eval expression='orderdetail.priceEach'/></td>
+<%-- 											<td>${orderdetail.priceEach}</td> --%>
+											<td>${orderdetail.quantityOrdered}</td>
+											<td>${orderdetail.value}</td>																
+											<td>
+													<c:choose>
+														<c:when test='${orderdetail.deliverable}'>&check;</c:when>
+														<c:otherwise>&cross;</c:otherwise>
+													</c:choose>
+											</td>
+										</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+
 </dl>
 Total value: ${order.totalValue}
 

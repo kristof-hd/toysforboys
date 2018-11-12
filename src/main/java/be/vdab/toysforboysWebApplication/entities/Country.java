@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name="countries")
@@ -15,7 +16,14 @@ public class Country implements Serializable {
 	@Id
 	private long id;
 	private String name;
+	
+	@Version
 	private long version;
+	
+	public Country(String name, long version) {
+		this.name=name;
+		this.version=version; 
+	}
 	
 	protected Country() {
 	}

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import be.vdab.toysforboysWebApplication.valueobjects.Adress;
 
@@ -28,7 +29,8 @@ public class Customer implements Serializable {
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
 	@JoinColumn(name="countryid")
 	private Country country; 
-		
+
+	@Version
 	private long version;
 	
 	public long getId() {
@@ -54,7 +56,7 @@ public class Customer implements Serializable {
 		this.country=country; 
 	}
 	
-	public Customer(String name, Country country, long version) {
+	public Customer(String name, Adress adress, Country country, long version) {
 		this.name=name;
 		setCountry(country);
 		this.version=version; 

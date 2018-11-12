@@ -22,6 +22,7 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import be.vdab.toysforboysWebApplication.enums.Status;
 import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
@@ -47,6 +48,7 @@ public class Order implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Status status; 
 	
+	@Version
 	private long version; 
 	
 	@ElementCollection
@@ -104,21 +106,23 @@ public class Order implements Serializable {
 		return Collections.unmodifiableSet(orderDetails); 
 	}
 	
-//	public boolean isShippable() {
-//		return shippable; 
-//	}
-//	
-//	public void setOrderAsShippable() {
-//		this.shippable=true; 
-//	}
+	public boolean add(OrderDetail orderDetail) {
+		return orderDetails.add(orderDetail); 
+	}
+
+	public boolean remove(OrderDetail orderDetail) {
+		return orderDetails.remove(orderDetail); 
+	}
+
 	
-	public Order(LocalDate orderDate, LocalDate requiredDate, LocalDate shippedDate, String comments, Customer customer, Status status) {
+	public Order(LocalDate orderDate, LocalDate requiredDate, LocalDate shippedDate, String comments, Customer customer, Status status, long version) {
 		this.orderDate=orderDate;
 		this.requiredDate=requiredDate;
 		this.shippedDate=shippedDate;
 		this.comments=comments; 
 		this.customer=customer;
 		this.status=status;
+		this.version=version;
 		this.orderDetails=new LinkedHashSet<>(); 
 	}
 	

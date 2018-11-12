@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name="products")
@@ -34,6 +35,7 @@ public class Product implements Serializable {
 		return productLine; 
 	}
 	
+	@Version
 	private long version;
 
 	public long getId() {
@@ -70,6 +72,17 @@ public class Product implements Serializable {
 	public long getVersion() {
 		return version;
 	} 
+	
+	public Product(String name, String scale, String description, long quantityInStock, long quantityInOrder, BigDecimal buyPrice, ProductLine productLine, long version) {
+		this.name=name;
+		this.scale=scale;
+		this.description=description;
+		this.quantityInStock=quantityInStock;
+		this.quantityInOrder=quantityInOrder;
+		this.buyPrice=buyPrice;
+		this.productLine=productLine;
+		this.version=version;
+	}
 	
 	protected Product() {
 	}

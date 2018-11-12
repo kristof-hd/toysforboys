@@ -54,7 +54,6 @@ class DefaultOrderService implements OrderService {
 				Product product = detail.getProduct();
 				product.setQuantityInOrder(product.getQuantityInOrder()-detail.getQuantityOrdered()); 
 				product.setQuantityInStock(product.getQuantityInStock()-detail.getQuantityOrdered());
-				//if(product.getQuantityInStock() < detail.getQuantityOrdered())
 				if(product.getQuantityInStock() < 0) {
 					System.out.println("an unshippable order");
 					unshippableOrders.add(id); 
