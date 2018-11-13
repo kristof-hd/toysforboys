@@ -20,8 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import be.vdab.toysforboysWebApplication.enums.Status;
@@ -53,10 +53,8 @@ public class Order implements Serializable {
 	
 	@ElementCollection
 	@CollectionTable(name="orderdetails", joinColumns=@JoinColumn(name="orderid"))
+	@OrderBy("productid")
 	private Set<OrderDetail> orderDetails; 
-	
-	@Transient
-	private boolean shippable; 
 	
 	public long getId() {
 		return id;
@@ -115,14 +113,13 @@ public class Order implements Serializable {
 	}
 
 	
-	public Order(LocalDate orderDate, LocalDate requiredDate, LocalDate shippedDate, String comments, Customer customer, Status status, long version) {
+	public Order(LocalDate orderDate, LocalDate requiredDate, LocalDate shippedDate, String comments, Customer customer, Status status) {
 		this.orderDate=orderDate;
 		this.requiredDate=requiredDate;
 		this.shippedDate=shippedDate;
 		this.comments=comments; 
 		this.customer=customer;
 		this.status=status;
-		this.version=version;
 		this.orderDetails=new LinkedHashSet<>(); 
 	}
 	

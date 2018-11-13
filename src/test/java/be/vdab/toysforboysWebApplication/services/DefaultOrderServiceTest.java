@@ -22,6 +22,7 @@ import be.vdab.toysforboysWebApplication.entities.Product;
 import be.vdab.toysforboysWebApplication.entities.ProductLine;
 import be.vdab.toysforboysWebApplication.enums.Status;
 import be.vdab.toysforboysWebApplication.exceptions.OrderNotFoundException;
+import be.vdab.toysforboysWebApplication.exceptions.ShippingException;
 import be.vdab.toysforboysWebApplication.repositories.OrderRepository;
 import be.vdab.toysforboysWebApplication.valueobjects.Adress;
 import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
@@ -32,16 +33,17 @@ public class DefaultOrderServiceTest {
 	@Mock
 	private OrderRepository repository;
 	private Order order;
+	private OrderDetail orderDetail; 
 
 	@Before
 	public void before() {
-		Country country = new Country("test", 1);
+		Country country = new Country("test");
 		Adress adress = new Adress("test", "test", "test", "test");
-		Customer customer = new Customer("test", adress, country, 1); 
-		order = new Order(LocalDate.of(2000, 1, 1), LocalDate.of(2000, 1, 10), LocalDate.of(2000,1, 5), "test", customer, Status.WAITING, 1);
-		ProductLine productLine = new ProductLine("test", "test", 1);
-		Product product = new Product("test", "test", "test", 100, 100, BigDecimal.TEN, productLine, 1); 
-		OrderDetail orderDetail = new OrderDetail(product, 70, BigDecimal.TEN);  
+		Customer customer = new Customer("test", adress, country); 
+		order = new Order(LocalDate.of(2000, 1, 1), LocalDate.of(2000, 1, 10), LocalDate.of(2000,1, 5), "test", customer, Status.WAITING);
+		ProductLine productLine = new ProductLine("test", "test");
+		Product product = new Product("test", "test", "test", 100, 100, BigDecimal.TEN, productLine); 
+		orderDetail = new OrderDetail(product, 70, BigDecimal.TEN);  
 		order.add(orderDetail);
 
 		when(repository.read(1)).thenReturn(Optional.of(order));
@@ -69,5 +71,11 @@ public class DefaultOrderServiceTest {
 	public void setAsShippedForNonExistingOrder() {
 		service.setStatus(-1, Status.SHIPPED);
 		verify(repository).read(-1);
+	}
+	
+	@Test(expected=ShippingException.class) 
+	public void orderingTooMuch() {
+		orderDetail.setQuantityOrdered(130); 
+		service.setStatus(1, Status.SHIPPED);
 	}
 }

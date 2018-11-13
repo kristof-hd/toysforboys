@@ -20,9 +20,8 @@ public class Country implements Serializable {
 	@Version
 	private long version;
 	
-	public Country(String name, long version) {
+	public Country(String name) {
 		this.name=name;
-		this.version=version; 
 	}
 	
 	protected Country() {

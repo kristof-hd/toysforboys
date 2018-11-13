@@ -41,7 +41,8 @@
 											<td><spring:eval expression='orderdetail.priceEach'/></td>
 <%-- 											<td>${orderdetail.priceEach}</td> --%>
 											<td>${orderdetail.quantityOrdered}</td>
-											<td>${orderdetail.value}</td>																
+<%--  											<td>${orderdetail.value}</td> --%>
+ 											<td><spring:eval expression='orderdetail.formattedValue.value'/></td>
 											<td>
 													<c:choose>
 														<c:when test='${orderdetail.deliverable}'>&check;</c:when>
@@ -55,7 +56,9 @@
 						</table>
 
 </dl>
-Total value: ${order.totalValue}
+<%-- Total value: ${order.totalValue} --%>
+Total value: <spring:eval expression = 'totalValue.value'/> 
+
 
 </body>
 </html>

@@ -52,16 +52,23 @@ public class JpaOrderRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	}
 
 	@Test
-	public void findAllUnshippedOrder() {
+	public void findAllUnshippedOrders() {
 		List<Order> orders = repository.findAllUnshippedOrders();
 		manager.clear();
 		assertEquals(super.countRowsInTableWhere(ORDERS, "status not in ('SHIPPED', 'CANCELLED')"), orders.size());
-		//where o.status not in ('SHIPPED', 'CANCELLED')
-//String vorigeNaam = "";
-//for (Album album : albums) {
-//assertTrue(album.getNaam().compareToIgnoreCase(vorigeNaam) >= 0);
-//vorigeNaam = album.getNaam();
-//System.out.println(album.getNaam() + ' ' + album.getArtiest().getNaam());
-//}
+
+	}
+	
+	@Test
+	public void customerLazyLoaded() {
+		Order order = repository.read(idVanTestOrder()).get(); 
+		assertEquals("test", order.getCustomer().getName());
+	}
+	
+	@Test
+	public void readingOrderDetails() {
+		Order order = repository.read(idVanTestOrder()).get(); 
+		assertEquals(10, order.getOrderDetails().stream().findFirst().get().getQuantityOrdered());
+		assertEquals(BigDecimal.valueOf(1).setScale(2), order.getOrderDetails().stream().findFirst().get().getPriceEach()); 
 	}
 }

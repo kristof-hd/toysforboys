@@ -37,10 +37,9 @@ public class ProductLine implements Serializable {
 		return version;
 	} 
 	
-	public ProductLine(String name, String description, long version) {
+	public ProductLine(String name, String description) {
 		this.name=name;
 		this.description=description;
-		this.version=version;
 	}
 	protected ProductLine() {
 	}

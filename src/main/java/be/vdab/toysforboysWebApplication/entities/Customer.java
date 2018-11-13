@@ -56,10 +56,9 @@ public class Customer implements Serializable {
 		this.country=country; 
 	}
 	
-	public Customer(String name, Adress adress, Country country, long version) {
+	public Customer(String name, Adress adress, Country country) {
 		this.name=name;
 		setCountry(country);
-		this.version=version; 
 	}
 	
 	protected Customer() {

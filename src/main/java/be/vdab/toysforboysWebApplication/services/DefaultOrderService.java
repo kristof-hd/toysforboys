@@ -52,12 +52,13 @@ class DefaultOrderService implements OrderService {
 			Set<OrderDetail> orderDetails = optionalOrder.get().getOrderDetails();
 			for (OrderDetail detail : orderDetails) {
 				Product product = detail.getProduct();
-				product.setQuantityInOrder(product.getQuantityInOrder()-detail.getQuantityOrdered()); 
-				product.setQuantityInStock(product.getQuantityInStock()-detail.getQuantityOrdered());
+				product.adjustQuantities(detail); 
+//				product.setQuantityInOrder(product.getQuantityInOrder()-detail.getQuantityOrdered()); 
+//				product.setQuantityInStock(product.getQuantityInStock()-detail.getQuantityOrdered());
 				if(product.getQuantityInStock() < 0) {
-					System.out.println("an unshippable order");
+					//System.out.println("an unshippable order");
 					unshippableOrders.add(id); 
-					throw new ShippingException(); 
+					throw new ShippingException("There is insufficient stock for one of the products of the order."); 
  				}
 			}
 		} else {

@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
+
 @Entity
 @Table(name="products")
 public class Product implements Serializable {
@@ -73,7 +75,7 @@ public class Product implements Serializable {
 		return version;
 	} 
 	
-	public Product(String name, String scale, String description, long quantityInStock, long quantityInOrder, BigDecimal buyPrice, ProductLine productLine, long version) {
+	public Product(String name, String scale, String description, long quantityInStock, long quantityInOrder, BigDecimal buyPrice, ProductLine productLine) {
 		this.name=name;
 		this.scale=scale;
 		this.description=description;
@@ -81,12 +83,15 @@ public class Product implements Serializable {
 		this.quantityInOrder=quantityInOrder;
 		this.buyPrice=buyPrice;
 		this.productLine=productLine;
-		this.version=version;
 	}
 	
 	protected Product() {
 	}
 
+	public void adjustQuantities(OrderDetail detail) {
+		this.quantityInOrder=this.quantityInOrder-detail.getQuantityOrdered(); 
+		this.quantityInStock=this.quantityInStock-detail.getQuantityOrdered();
 
+	}
 
 }

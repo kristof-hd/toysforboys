@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.toysforboysWebApplication.entities.Order;
 import be.vdab.toysforboysWebApplication.services.OrderService;
+import be.vdab.toysforboysWebApplication.valueobjects.FormattedNumber;
 
 @Controller
 @RequestMapping("orders")
@@ -17,6 +18,7 @@ class OrderController {
 	private final static String VIEW = "order";
 	private final static String REDIRECT_ORDER_NOT_FOUND = "redirect:/"; 
 	private final OrderService orderService;
+	
 	OrderController(OrderService orderService) {
 		this.orderService=orderService; 
 	}
@@ -25,9 +27,9 @@ class OrderController {
 	ModelAndView order(@PathVariable long id) {
 		Optional<Order> order = orderService.read(id);
 		if (order.isPresent()) {
-			//return new ModelAndView(VIEW).addObject(order.get());
 			ModelAndView modelAndView = new ModelAndView(VIEW); 
 			modelAndView.addObject(order.get());
+			modelAndView.addObject("totalValue", new FormattedNumber(order.get().getTotalValue())); 
 			return modelAndView; 
 		}
 		return new ModelAndView(REDIRECT_ORDER_NOT_FOUND); 
