@@ -13,9 +13,9 @@
 <h1>Order ${order.id}</h1>
 <dl>
 	<dt>Ordered:</dt>
-	<dd>${order.orderDate}</dd> 
+	<dd>${order.formattedOrderDate}</dd> 
 	<dt>Required:</dt>
-	<dd>${order.requiredDate}</dd> 
+	<dd>${order.formattedRequiredDate}</dd> 
 	<dt>Customer:</dt>
 	<dd>${order.customer.name} <br> 
 		${order.customer.adress.streetAndNumber} <br>
@@ -24,41 +24,36 @@
 	<dt>Comments:</dt>
 	<dd>${order.comments}</dd> 
 	<dt>Details:</dt>
-						<table>
-							<thead>
-								<tr>
-									<th>Product</th>
-									<th>Price each</th>
-									<th>Quantity</th>
-									<th>Value</th>
-									<th>Deliverable</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items='${order.orderDetails}' var='orderdetail'>
-										<tr>
-											<td>${orderdetail.product.name}</td> 
-											<td><spring:eval expression='orderdetail.priceEach'/></td>
-<%-- 											<td>${orderdetail.priceEach}</td> --%>
-											<td>${orderdetail.quantityOrdered}</td>
-<%--  											<td>${orderdetail.value}</td> --%>
- 											<td><spring:eval expression='orderdetail.formattedValue.value'/></td>
-											<td>
-													<c:choose>
-														<c:when test='${orderdetail.deliverable}'>&check;</c:when>
-														<c:otherwise>&cross;</c:otherwise>
-													</c:choose>
-											</td>
-										</tr>
-								</c:forEach>
-
-							</tbody>
-						</table>
-
+			<table>
+				<thead>
+					<tr>
+						<th>Product</th>
+						<th>Price each</th>
+						<th>Quantity</th>
+						<th>Value</th>
+						<th>Deliverable</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items='${order.orderDetails}' var='orderdetail'>
+							<tr>
+								<td>${orderdetail.product.name}</td> 
+								<td><spring:eval expression='orderdetail.priceEach'/></td>
+								<td>${orderdetail.quantityOrdered}</td>
+								<td><spring:eval expression='orderdetail.formattedValue.value'/></td>
+								<td>
+										<c:choose>
+											<c:when test='${orderdetail.deliverable}'>&check;</c:when>
+											<c:otherwise>&cross;</c:otherwise>
+										</c:choose>
+								</td>
+							</tr>
+					</c:forEach>
+					</tbody>
+			</table>
 </dl>
 <%-- Total value: ${order.totalValue} --%>
 Total value: <spring:eval expression = 'totalValue.value'/> 
-
 
 </body>
 </html>

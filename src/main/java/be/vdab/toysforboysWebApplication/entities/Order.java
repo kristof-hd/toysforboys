@@ -3,6 +3,7 @@ package be.vdab.toysforboysWebApplication.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -24,6 +25,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import be.vdab.toysforboysWebApplication.enums.Status;
 import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
 
@@ -36,6 +39,7 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id; 
+	
 	private LocalDate orderDate;
 	private LocalDate requiredDate;
 	private LocalDate shippedDate;
@@ -60,18 +64,34 @@ public class Order implements Serializable {
 		return id;
 	}
 
+	public String getTestDate() {
+		LocalDate testDate = LocalDate.now(); 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+		return testDate.format(formatter);
+	}
+
 	public LocalDate getOrderDate() {
 		return orderDate;
 	}
 
+	public String getFormattedOrderDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yy");
+		return orderDate.format(formatter);
+	}
+	
 	public LocalDate getRequiredDate() {
 		return requiredDate;
 	}
 
+	public String getFormattedRequiredDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yy");
+		return requiredDate.format(formatter);
+	}
+	
 	public LocalDate getShippedDate() {
 		return shippedDate;
 	}
-	
+
 	public void setShippedDate(LocalDate shippedDate) {
 		this.shippedDate=shippedDate;
 	}	
