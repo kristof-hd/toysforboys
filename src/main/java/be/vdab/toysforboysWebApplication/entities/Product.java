@@ -67,7 +67,6 @@ public class Product implements Serializable {
 		this.quantityInStock=quantityInStock;
 	}
 
-	
 	public BigDecimal getBuyPrice() {
 		return buyPrice;
 	}
@@ -91,7 +90,6 @@ public class Product implements Serializable {
 	public void adjustQuantities(OrderDetail detail) {
 		this.quantityInOrder=this.quantityInOrder-detail.getQuantityOrdered(); 
 		this.quantityInStock=this.quantityInStock-detail.getQuantityOrdered();
-
 	}
 
 }

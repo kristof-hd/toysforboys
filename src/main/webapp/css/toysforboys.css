@@ -3,8 +3,39 @@ body {
 	font-family: sans-serif; 
 }
 
+input {
+	float: right;
+	font-size: 18px; 
+}
+
 table {
 	border-collapse: collapse;
+ 	table-layout: fixed;
+	width: 100%; 
+}
+
+thead th:nth-child(1) {
+	width: 3%; 
+}
+
+thead th:nth-child(2) {
+	width: 10%; 
+}
+
+thead th:nth-child(3) {
+	width: 10%; 
+}
+
+thead th:nth-child(4) {
+	width: 20%; 
+}
+
+thead th:nth-child(5) {
+	width: 40%; 
+}
+
+thead th:nth-child(6) {
+	width: 14%; 
 }
 
 table, th, td {
@@ -21,14 +52,55 @@ tbody td {
 	text-align: left; 
 }
 
-nav ul {
-	list-style: none;
-	padding: 0;
+table.zebra tr:nth-child(odd) {
+	background-color: white;
 }
 
-nav ul li {
-	display: inline;
+table.zebra tr:nth-child(even) {
+	background-color: lightgrey;
 }
+
+table.zebra tr:nth-child(odd):hover, table.zebra tr:nth-child(even):hover {
+	background-color: #ccff00;
+} 
+
+table.details {
+	border-collapse: collapse;
+ 	table-layout: fixed;
+	width: 60%; 
+}
+
+table.details thead th:nth-child(1) {
+	width: 15%; 
+}
+
+table.details thead th:nth-child(2) {
+	width: 5%; 
+}
+
+table.details thead th:nth-child(3) {
+	width: 5%; 
+}
+
+table.details thead th:nth-child(4) {
+	width: 5%; 
+}
+
+table.details thead th:nth-child(5) {
+	width: 5%; 
+}
+
+table.details tr:nth-child(odd) {
+	background-color: white;
+}
+
+table.details tr:nth-child(even) {
+	background-color: lightgrey;
+}
+
+table.details tr:nth-child(odd):hover, table.details tr:nth-child(even):hover {
+	background-color: #ccff00;
+} 
 
 dd,dt {
 	margin-left: 0;

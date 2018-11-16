@@ -12,47 +12,73 @@
 </head>
 <body>
 	<h1>Unshipped orders</h1>
+	<c:if test='${numberOfUnshippableOrders>0}'>
+		<span>
+			Shipping failed for order(s) 
+			<c:forEach items='${unshippableOrders}' var='unshippableOrder' varStatus='status'>
+				<c:if test='${numberOfUnshippableOrders==1}'>${unshippableOrder}</c:if>
+				<c:if test='${numberOfUnshippableOrders==2}'>
+					<c:if test='${status.first}'>${unshippableOrder}</c:if>
+					<c:if test='${status.last}'>aand ${unshippableOrder}</c:if>
+				</c:if>
+				<c:if test='${numberOfUnshippableOrders>2}'>
+					<c:choose>
+						<c:when test='${status.first}'>${unshippableOrder}</c:when>
+						<c:when test='${status.last}'>and ${unshippableOrder}</c:when>
+						<c:otherwise>, ${unshippableOrder}</c:otherwise>
+					</c:choose>
+				</c:if>
+			</c:forEach>
+			, not enough stock.
+		</span>
+	</c:if>	
 	
-	<c:forEach items='${unshippableOrders}' var='unshippableOrder'>
-		<p>Shopping failed for order ${unshippableOrder }, not enough stock.</p>
-	</c:forEach>
+<%-- 	<c:if test='${numberOfUnshippableOrders>0}'>
+		<span>
+			Shipping failed for order(s) 
+			<c:forEach items='${unshippableOrders}' var='unshippableOrder'>
+				${unshippableOrder},
+			</c:forEach>
+			not enough stock.
+		</span>
+	</c:if> --%>
 	
-					<c:url value='/' var='url'/>
-					<form:form action='${url}' method='post'>
-						<input type='submit' value='Set as shipped'>
-						<table>
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Ordered</th>
-									<th>Required</th>
-									<th>Customer</th>
-									<th>Comments</th>																						
-									<th>Status</th>
-									<th>Ship</th>									
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items='${orders}' var='order'>
-										<spring:url var='url' value='/orders/{id}'>
-											<spring:param name='id' value='${order.id}'/>
-										</spring:url>
-										<tr>
-											<td><a href='${url}'>${order.id}</a></td> 
-											<td>${order.orderDate}</td>
-											<td>${order.requiredDate}</td>
-											<td>${order.customer.name}</td>																
-											<td>${order.comments}</td>
-											<td><img src='images/${order.status}.png' alt='{order.status}'>${order.status}</td>
-											<td>
-												<input type='checkbox' name='shipid' value='${order.id}'>						
-											</td>
-										</tr>
-								</c:forEach>
+	<c:url value='/' var='url'/>
+	<form:form action='${url}' method='post'>
+		<input type='submit' value='Set as shipped'><br><br>
+		<table class='zebra'>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Ordered</th>
+					<th>Required</th>
+					<th>Customer</th>
+					<th>Comments</th>																						
+					<th>Status</th>
+					<th>Ship</th>									
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items='${orders}' var='order'>
+						<spring:url var='url' value='/orders/{id}'>
+							<spring:param name='id' value='${order.id}'/>
+						</spring:url>
+						<tr>
+							<td><a href='${url}'>${order.id}</a></td> 
+							<td>${order.orderDate}</td>
+							<td>${order.requiredDate}</td>
+							<td>${order.customer.name}</td>																
+							<td>${order.comments}</td>
+							<td><img src='images/${order.status}.png' alt='{order.status}'> ${order.status}</td>
+							<td>
+								<input type='checkbox' name='shipid' value='${order.id}'>						
+							</td>
+						</tr>
+				</c:forEach>
 
-							</tbody>
-						</table>
-					</form:form>
+			</tbody>
+		</table>
+	</form:form>
 
 </body>
 </html>

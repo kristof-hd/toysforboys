@@ -24,7 +24,7 @@
 	<dt>Comments:</dt>
 	<dd>${order.comments}</dd> 
 	<dt>Details:</dt>
-			<table>
+			<table class='details'>
 				<thead>
 					<tr>
 						<th>Product</th>

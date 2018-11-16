@@ -25,8 +25,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import be.vdab.toysforboysWebApplication.enums.Status;
 import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
 
@@ -131,7 +129,6 @@ public class Order implements Serializable {
 	public boolean remove(OrderDetail orderDetail) {
 		return orderDetails.remove(orderDetail); 
 	}
-
 	
 	public Order(LocalDate orderDate, LocalDate requiredDate, LocalDate shippedDate, String comments, Customer customer, Status status) {
 		this.orderDate=orderDate;

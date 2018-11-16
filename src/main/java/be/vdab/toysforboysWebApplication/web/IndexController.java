@@ -16,7 +16,6 @@ class IndexController {
 	
 	private final static String VIEW="index"; 
 	private final OrderService orderService; 
-	private static final String REDIRECT_NA_SET_AS_SHIPPED="redirect:/";
 
 	IndexController(OrderService orderService) {
 		this.orderService=orderService;
@@ -38,6 +37,7 @@ class IndexController {
 		}
 		modelAndView.addObject("orders", orderService.findAllUnshippedOrders());
 		modelAndView.addObject("unshippableOrders", orderService.getUnshippableOrders());
+		modelAndView.addObject("numberOfUnshippableOrders", orderService.getUnshippableOrders().size());
 		return modelAndView; 
 	}	
 	
