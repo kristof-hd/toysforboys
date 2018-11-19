@@ -13,7 +13,7 @@
 <body>
 	<h1>Unshipped orders</h1>
 	<c:if test='${numberOfUnshippableOrders>0}'>
-		<span>
+		<span class='error'>
 			Shipping failed for order(s) 
 			<c:forEach items='${unshippableOrders}' var='unshippableOrder' varStatus='status'>
 				<c:if test='${numberOfUnshippableOrders==1}'>${unshippableOrder}</c:if>

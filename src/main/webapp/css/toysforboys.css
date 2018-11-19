@@ -8,7 +8,7 @@ input {
 	font-size: 18px; 
 }
 
-span {
+.error {
 	font-size: 20px; 
 	font-weight: bold; 
 	color: grey;
@@ -79,7 +79,7 @@ tbody td:nth-child(6) {
 }
 
 tbody td:nth-child(7) {
-	text-align: left;
+	vertical-align: left; 
 }
 
 table.zebra tr:nth-child(odd) {
@@ -148,7 +148,6 @@ table.details tr:nth-child(odd):hover, table.details tr:nth-child(even):hover {
 	background-color: #ccff00;
 } 
 
-
 dd,dt {
 	margin-left: 0;
 }
@@ -159,4 +158,14 @@ dt {
 
 dd {
 	font-weight: bold;
+}
+
+.check {
+	color: green; 
+	font-size: 15px; 
+}
+
+.cross {
+	color: red;
+	font-size: 15px; 
 }

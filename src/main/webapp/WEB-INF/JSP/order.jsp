@@ -44,8 +44,8 @@
 								<td><spring:eval expression='orderdetail.formattedValue.value'/></td>
 								<td>
 										<c:choose>
-											<c:when test='${orderdetail.deliverable}'>&check;</c:when>
-											<c:otherwise>&cross;</c:otherwise>
+											<c:when test='${orderdetail.deliverable}'><span class='check'>&check;</span></c:when>
+											<c:otherwise><span class='cross'>&cross;</span></c:otherwise>
 										</c:choose>
 								</td>
 							</tr>
@@ -56,6 +56,5 @@
 	<dt>Value:</dt> 
 	<dd><spring:eval expression = 'totalValue.value'/></dd> 
 </dl>
-
 </body>
 </html>
