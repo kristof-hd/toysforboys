@@ -29,23 +29,23 @@ public class DefaultOrderServiceIntegrationTest extends AbstractTransactionalJUn
 
 	private long idVanTestOrder() {
 		return super.jdbcTemplate.queryForObject("select id from orders where orderDate='2000-01-01'", Long.class);
-
 	}
 
 	@Test
-	public void setStatus() {
+	public void setAsShippedActions() {
 		long id = idVanTestOrder();
-		service.setStatus(id, Status.SHIPPED);
+		service.setAsShippedActions(id, Status.SHIPPED);
 		manager.flush();
 		Status newStatus = super.jdbcTemplate.queryForObject("select status from orders where id=?", Status.class, id);
 		assertEquals(Status.SHIPPED, newStatus);
-		//LocalDate shippedDate = super.jdbcTemplate.queryForObject("select shippedDate from orders where id=?", LocalDate.class, id);
-		//assertEquals(LocalDate.now(), shippedDate);
-		long newQuantityInStock = super.jdbcTemplate.queryForObject("select quantityInStock from products where id=(select productId from orderdetails where orderId=?)", Long.class, id);
+		LocalDate shippedDate = super.jdbcTemplate.queryForObject("select shippedDate from orders where id=?", LocalDate.class, id);
+		assertEquals(LocalDate.now(), shippedDate);
+		long newQuantityInStock = super.jdbcTemplate.queryForObject(
+				"select quantityInStock from products where id=(select productId from orderdetails where orderId=?)", Long.class, id);
 		assertEquals(90, newQuantityInStock);
-		long newQuantityInOrder = super.jdbcTemplate.queryForObject("select quantityInOrder from products where id=(select productId from orderdetails where orderId=?)", Long.class, id);
+		long newQuantityInOrder = super.jdbcTemplate.queryForObject(
+				"select quantityInOrder from products where id=(select productId from orderdetails where orderId=?)", Long.class, id);
 		assertEquals(90, newQuantityInOrder);
-
 	}
 
 }

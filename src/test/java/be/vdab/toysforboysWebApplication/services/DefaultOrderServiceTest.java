@@ -24,7 +24,7 @@ import be.vdab.toysforboysWebApplication.enums.Status;
 import be.vdab.toysforboysWebApplication.exceptions.OrderNotFoundException;
 import be.vdab.toysforboysWebApplication.exceptions.ShippingException;
 import be.vdab.toysforboysWebApplication.repositories.OrderRepository;
-import be.vdab.toysforboysWebApplication.valueobjects.Adress;
+import be.vdab.toysforboysWebApplication.valueobjects.Address;
 import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,7 +38,7 @@ public class DefaultOrderServiceTest {
 	@Before
 	public void before() {
 		Country country = new Country("test");
-		Adress adress = new Adress("test", "test", "test", "test");
+		Address adress = new Address("test", "test", "test", "test");
 		Customer customer = new Customer("test", adress, country); 
 		order = new Order(LocalDate.of(2000, 1, 1), LocalDate.of(2000, 1, 10), LocalDate.of(2000,1, 5), "test", customer, Status.WAITING);
 		ProductLine productLine = new ProductLine("test", "test");
@@ -55,7 +55,7 @@ public class DefaultOrderServiceTest {
 	@Test
 	public void shipped() {
 
-		service.setStatus(1, Status.SHIPPED);
+		service.setAsShippedActions(1, Status.SHIPPED);
 		assertEquals(Status.SHIPPED, order.getStatus());
 		assertEquals(LocalDate.now(), order.getShippedDate());
 		verify(repository).read(1);
@@ -69,13 +69,13 @@ public class DefaultOrderServiceTest {
 
 	@Test(expected = OrderNotFoundException.class)
 	public void setAsShippedForNonExistingOrder() {
-		service.setStatus(-1, Status.SHIPPED);
+		service.setAsShippedActions(-1, Status.SHIPPED);
 		verify(repository).read(-1);
 	}
 	
 	@Test(expected=ShippingException.class) 
 	public void orderingTooMuch() {
 		orderDetail.setQuantityOrdered(130); 
-		service.setStatus(1, Status.SHIPPED);
+		service.setAsShippedActions(1, Status.SHIPPED);
 	}
 }

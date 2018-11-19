@@ -7,7 +7,7 @@ import be.vdab.toysforboysWebApplication.entities.Order;
 
 public interface OrderRepository {
 
-	List<Order> findAllUnshippedOrders(); 
-	Optional<Order> read(long id); 
-	
+	List<Order> findAllUnshippedOrders();
+	Optional<Order> read(long id);
+
 }

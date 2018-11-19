@@ -8,6 +8,12 @@ input {
 	font-size: 18px; 
 }
 
+span {
+	font-size: 20px; 
+	font-weight: bold; 
+	color: grey;
+}
+
 table {
 	border-collapse: collapse;
  	table-layout: fixed;
@@ -19,11 +25,11 @@ thead th:nth-child(1) {
 }
 
 thead th:nth-child(2) {
-	width: 10%; 
+	width: 8%; 
 }
 
 thead th:nth-child(3) {
-	width: 10%; 
+	width: 8%; 
 }
 
 thead th:nth-child(4) {
@@ -31,7 +37,7 @@ thead th:nth-child(4) {
 }
 
 thead th:nth-child(5) {
-	width: 40%; 
+	width: 43%; 
 }
 
 thead th:nth-child(6) {
@@ -45,19 +51,43 @@ table, th, td {
 thead th {
 	background: lightgrey; 
 	color: white;
+	text-align: center;
+}
+
+tbody td:nth-child(1) {
+	text-align: right;
+}
+
+tbody td:nth-child(2) {
+	text-align: right;
+}
+
+tbody td:nth-child(3) {
+	text-align: right;
+}
+
+tbody td:nth-child(4) {
 	text-align: left;
 }
 
-tbody td {
-	text-align: left; 
+tbody td:nth-child(5) {
+	text-align: left;
+}
+
+tbody td:nth-child(6) {
+	text-align: left;
+}
+
+tbody td:nth-child(7) {
+	text-align: left;
 }
 
 table.zebra tr:nth-child(odd) {
-	background-color: white;
+	background-color: #F8F8F8;
 }
 
 table.zebra tr:nth-child(even) {
-	background-color: lightgrey;
+	background-color: white;
 }
 
 table.zebra tr:nth-child(odd):hover, table.zebra tr:nth-child(even):hover {
@@ -90,17 +120,34 @@ table.details thead th:nth-child(5) {
 	width: 5%; 
 }
 
+table.details tbody td {
+	font-weight: bold; 
+}
+
+table.details tbody td:nth-child(4) {
+	text-align: right;
+}
+
+table.details tbody td:nth-child(5) {
+	text-align: center;
+}
+
+table.details tbody td:nth-child(5) {
+	color: grey; 
+}
+
 table.details tr:nth-child(odd) {
-	background-color: white;
+	background-color: #F8F8F8;
 }
 
 table.details tr:nth-child(even) {
-	background-color: lightgrey;
+	background-color: white;
 }
 
 table.details tr:nth-child(odd):hover, table.details tr:nth-child(even):hover {
 	background-color: #ccff00;
 } 
+
 
 dd,dt {
 	margin-left: 0;

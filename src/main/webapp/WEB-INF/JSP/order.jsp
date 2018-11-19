@@ -13,17 +13,18 @@
 <h1>Order ${order.id}</h1>
 <dl>
 	<dt>Ordered:</dt>
-	<dd>${order.formattedOrderDate}</dd> 
+	<dd>${order.formattedOrderDateWithSlash}</dd> 
 	<dt>Required:</dt>
-	<dd>${order.formattedRequiredDate}</dd> 
+	<dd>${order.formattedRequiredDateWithSlash}</dd> 
 	<dt>Customer:</dt>
 	<dd>${order.customer.name} <br> 
-		${order.customer.adress.streetAndNumber} <br>
-		${order.customer.adress.postalCode} ${order.customer.adress.city} ${order.customer.adress.state} <br> 
+		${order.customer.address.streetAndNumber} <br>
+		${order.customer.address.postalCode} ${order.customer.address.city} ${order.customer.address.state} <br> 
 		${order.customer.country.name}</dd>
 	<dt>Comments:</dt>
 	<dd>${order.comments}</dd> 
 	<dt>Details:</dt>
+	<dd>
 			<table class='details'>
 				<thead>
 					<tr>
@@ -51,9 +52,10 @@
 					</c:forEach>
 					</tbody>
 			</table>
+	</dd>
+	<dt>Value:</dt> 
+	<dd><spring:eval expression = 'totalValue.value'/></dd> 
 </dl>
-<%-- Total value: ${order.totalValue} --%>
-Total value: <spring:eval expression = 'totalValue.value'/> 
 
 </body>
 </html>

@@ -11,23 +11,22 @@ import be.vdab.toysforboysWebApplication.entities.Order;
 
 @Repository
 class JpaOrderRepository implements OrderRepository {
-	
+
 	private final EntityManager manager;
-	
+
 	JpaOrderRepository(EntityManager manager) {
-		this.manager=manager;
+		this.manager = manager;
 	}
-	
+
 	@Override
 	public List<Order> findAllUnshippedOrders() {
 		return manager.createNamedQuery("Order.findAllUnshippedOrders", Order.class)
-				.setHint("javax.persistence.loadgraph",
-				manager.createEntityGraph(Order.WITH_CUSTOMER))
-				.getResultList();	} 
-	
+				.setHint("javax.persistence.loadgraph", manager.createEntityGraph(Order.WITH_CUSTOMER)).getResultList();
+	}
+
 	@Override
 	public Optional<Order> read(long id) {
 		return Optional.ofNullable(manager.find(Order.class, id));
 	}
-	
+
 }

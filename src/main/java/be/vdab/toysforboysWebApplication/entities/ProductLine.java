@@ -10,13 +10,13 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name="products")
+@Table(name = "products")
 public class ProductLine implements Serializable {
 
-	private static final long serialVersionUID=1L;
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY) 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private String description;
@@ -27,21 +27,25 @@ public class ProductLine implements Serializable {
 	public long getId() {
 		return id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public long getVersion() {
 		return version;
-	} 
-	
-	public ProductLine(String name, String description) {
-		this.name=name;
-		this.description=description;
 	}
+
+	public ProductLine(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
+
 	protected ProductLine() {
 	}
-	
+
 }

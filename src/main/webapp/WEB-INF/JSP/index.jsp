@@ -33,16 +33,6 @@
 		</span>
 	</c:if>	
 	
-<%-- 	<c:if test='${numberOfUnshippableOrders>0}'>
-		<span>
-			Shipping failed for order(s) 
-			<c:forEach items='${unshippableOrders}' var='unshippableOrder'>
-				${unshippableOrder},
-			</c:forEach>
-			not enough stock.
-		</span>
-	</c:if> --%>
-	
 	<c:url value='/' var='url'/>
 	<form:form action='${url}' method='post'>
 		<input type='submit' value='Set as shipped'><br><br>
@@ -65,11 +55,11 @@
 						</spring:url>
 						<tr>
 							<td><a href='${url}'>${order.id}</a></td> 
-							<td>${order.orderDate}</td>
-							<td>${order.requiredDate}</td>
+							<td>${order.formattedOrderDateWithHyphen}</td>
+							<td>${order.formattedRequiredDateWithHyphen}</td>
 							<td>${order.customer.name}</td>																
 							<td>${order.comments}</td>
-							<td><img src='images/${order.status}.png' alt='{order.status}'> ${order.status}</td>
+							<td><img src='images/${order.status}.png' alt='{order.status}'> ${order.statusAsString}</td>
 							<td>
 								<input type='checkbox' name='shipid' value='${order.id}'>						
 							</td>

@@ -45,7 +45,7 @@ public class JpaOrderRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		Order order = repository.read(idVanTestOrder()).get();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate date = LocalDate.parse("2000-01-01", formatter);
-		
+
 		assertEquals(date, order.getOrderDate());
 		assertEquals("test", order.getCustomer().getName());
 		assertEquals(0, BigDecimal.TEN.compareTo(order.getTotalValue()));
@@ -58,17 +58,18 @@ public class JpaOrderRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		assertEquals(super.countRowsInTableWhere(ORDERS, "status not in ('SHIPPED', 'CANCELLED')"), orders.size());
 
 	}
-	
+
 	@Test
 	public void customerLazyLoaded() {
-		Order order = repository.read(idVanTestOrder()).get(); 
+		Order order = repository.read(idVanTestOrder()).get();
 		assertEquals("test", order.getCustomer().getName());
 	}
-	
+
 	@Test
 	public void readingOrderDetails() {
-		Order order = repository.read(idVanTestOrder()).get(); 
+		Order order = repository.read(idVanTestOrder()).get();
 		assertEquals(10, order.getOrderDetails().stream().findFirst().get().getQuantityOrdered());
-		assertEquals(BigDecimal.valueOf(1).setScale(2), order.getOrderDetails().stream().findFirst().get().getPriceEach()); 
+		assertEquals(BigDecimal.valueOf(1).setScale(2),
+				order.getOrderDetails().stream().findFirst().get().getPriceEach());
 	}
 }

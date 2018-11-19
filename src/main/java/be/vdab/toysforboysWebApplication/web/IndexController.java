@@ -13,32 +13,35 @@ import be.vdab.toysforboysWebApplication.services.OrderService;
 @Controller
 @RequestMapping("/")
 class IndexController {
-	
-	private final static String VIEW="index"; 
-	private final OrderService orderService; 
+
+	private final static String VIEW = "index";
+	private final OrderService orderService;
 
 	IndexController(OrderService orderService) {
-		this.orderService=orderService;
+		this.orderService = orderService;
 	}
-	
+
 	@GetMapping
 	ModelAndView orders() {
-		return new ModelAndView(VIEW, "orders", orderService.findAllUnshippedOrders()); 
+		return new ModelAndView(VIEW, "orders", orderService.findAllUnshippedOrders());
 	}
 
 	@PostMapping
 	ModelAndView actionsSetAsShipped(long[] shipid) {
-		ModelAndView modelAndView = new ModelAndView(VIEW); 
-		if(shipid!=null) {
-			for (long id: shipid) {
-				try {orderService.setStatus(id, Status.SHIPPED);}
-				catch (ShippingException ex) {ex.getMessage();}
+		ModelAndView modelAndView = new ModelAndView(VIEW);
+		if (shipid != null) {
+			for (long id : shipid) {
+				try {
+					orderService.setAsShippedActions(id, Status.SHIPPED);
+				} catch (ShippingException ex) {
+					ex.getMessage();
+				}
 			}
 		}
 		modelAndView.addObject("orders", orderService.findAllUnshippedOrders());
 		modelAndView.addObject("unshippableOrders", orderService.getUnshippableOrders());
 		modelAndView.addObject("numberOfUnshippableOrders", orderService.getUnshippableOrders().size());
-		return modelAndView; 
-	}	
-	
+		return modelAndView;
+	}
+
 }

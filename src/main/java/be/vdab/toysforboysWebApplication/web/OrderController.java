@@ -16,22 +16,22 @@ import be.vdab.toysforboysWebApplication.valueobjects.FormattedNumber;
 @RequestMapping("orders")
 class OrderController {
 	private final static String VIEW = "order";
-	private final static String REDIRECT_ORDER_NOT_FOUND = "redirect:/"; 
+	private final static String REDIRECT_ORDER_NOT_FOUND = "redirect:/";
 	private final OrderService orderService;
-	
+
 	OrderController(OrderService orderService) {
-		this.orderService=orderService; 
+		this.orderService = orderService;
 	}
-	
+
 	@GetMapping("{id}")
 	ModelAndView order(@PathVariable long id) {
 		Optional<Order> order = orderService.read(id);
 		if (order.isPresent()) {
-			ModelAndView modelAndView = new ModelAndView(VIEW); 
+			ModelAndView modelAndView = new ModelAndView(VIEW);
 			modelAndView.addObject(order.get());
-			modelAndView.addObject("totalValue", new FormattedNumber(order.get().getTotalValue())); 
-			return modelAndView; 
+			modelAndView.addObject("totalValue", new FormattedNumber(order.get().getTotalValue()));
+			return modelAndView;
 		}
-		return new ModelAndView(REDIRECT_ORDER_NOT_FOUND); 
+		return new ModelAndView(REDIRECT_ORDER_NOT_FOUND);
 	}
 }

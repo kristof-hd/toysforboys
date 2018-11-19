@@ -15,27 +15,28 @@ import be.vdab.toysforboysWebApplication.entities.Product;
 @Embeddable
 public class OrderDetail implements Serializable {
 
-	private static final long serialVersionUID=1L; 
+	private static final long serialVersionUID = 1L;
 	private long quantityOrdered;
-	@NumberFormat(pattern="0.00") private BigDecimal priceEach; 
+	@NumberFormat(pattern = "#,##0.00")
+	private BigDecimal priceEach;
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="productId")
-	private Product product; 
-	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "productId")
+	private Product product;
+
 	public OrderDetail(Product product, long quantityOrdered, BigDecimal priceEach) {
-		this.product=product; 
-		this.quantityOrdered=quantityOrdered;
-		this.priceEach=priceEach; 
+		this.product = product;
+		this.quantityOrdered = quantityOrdered;
+		this.priceEach = priceEach;
 	}
-	
+
 	protected OrderDetail() {
 	}
 
 	public Product getProduct() {
-		return product; 
+		return product;
 	}
-	
+
 	public long getQuantityOrdered() {
 		return quantityOrdered;
 	}
@@ -47,31 +48,31 @@ public class OrderDetail implements Serializable {
 	public BigDecimal getPriceEach() {
 		return priceEach;
 	}
-	
+
 	public BigDecimal getValue() {
-		return BigDecimal.valueOf(quantityOrdered).multiply(priceEach); 
+		return BigDecimal.valueOf(quantityOrdered).multiply(priceEach);
 	}
 
 	public FormattedNumber getFormattedValue() {
-		return new FormattedNumber(BigDecimal.valueOf(quantityOrdered).multiply(priceEach)); 
-	}	
-	
-	public boolean isDeliverable() {
-		return quantityOrdered<=product.getQuantityInStock(); 
+		return new FormattedNumber(BigDecimal.valueOf(quantityOrdered).multiply(priceEach));
 	}
-	
+
+	public boolean isDeliverable() {
+		return quantityOrdered <= product.getQuantityInStock();
+	}
+
 	@Override
 	public boolean equals(Object object) {
-		if(! (object instanceof OrderDetail)) {
-			return false; 
+		if (!(object instanceof OrderDetail)) {
+			return false;
 		}
 		OrderDetail orderDetail = (OrderDetail) object;
 		return product.getName().equalsIgnoreCase(orderDetail.getProduct().getName());
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return product.getName().toUpperCase().hashCode(); 
+		return product.getName().toUpperCase().hashCode();
 	}
 
 }

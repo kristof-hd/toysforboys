@@ -11,57 +11,57 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import be.vdab.toysforboysWebApplication.valueobjects.Adress;
+import be.vdab.toysforboysWebApplication.valueobjects.Address;
 
 @Entity
-@Table(name="customers")
+@Table(name = "customers")
 public class Customer implements Serializable {
 
-	private static final long serialVersionUID=1L; 
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private long id;
-	private String name; 
+	private String name;
 
 	@Embedded
-	private Adress adress;
+	private Address address;
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="countryid")
-	private Country country; 
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "countryid")
+	private Country country;
 
 	@Version
 	private long version;
-	
+
 	public long getId() {
-		return id; 
+		return id;
 	}
-	
+
 	public String getName() {
-		return name; 
+		return name;
 	}
-	
-	public Adress getAdress() {
-		return adress; 
+
+	public Address getAddress() {
+		return address;
 	}
-	
+
 	public Country getCountry() {
-		return country; 
+		return country;
 	}
-	
+
 	public void setCountry(Country country) {
-		if(country==null) {
+		if (country == null) {
 			throw new NullPointerException();
 		}
-		this.country=country; 
+		this.country = country;
 	}
-	
-	public Customer(String name, Adress adress, Country country) {
-		this.name=name;
+
+	public Customer(String name, Address address, Country country) {
+		this.name = name;
 		setCountry(country);
 	}
-	
+
 	protected Customer() {
 	}
-	
+
 }
