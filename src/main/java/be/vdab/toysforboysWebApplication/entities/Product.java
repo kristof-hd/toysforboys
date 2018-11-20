@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import be.vdab.toysforboysWebApplication.exceptions.ShippingException;
 import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
 
 @Entity
@@ -65,20 +66,9 @@ public class Product implements Serializable {
 		return quantityInOrder;
 	}
 
-	public void setQuantityInOrder(long quantityInOrder) {
-		this.quantityInOrder = quantityInOrder;
-	}
-
-	public void setQuantityInStock(long quantityInStock) {
-		this.quantityInStock = quantityInStock;
-	}
-
+	
 	public BigDecimal getBuyPrice() {
 		return buyPrice;
-	}
-
-	public long getVersion() {
-		return version;
 	}
 
 	public Product(String name, String scale, String description, long quantityInStock, long quantityInOrder,
@@ -96,6 +86,9 @@ public class Product implements Serializable {
 	}
 
 	public void adjustQuantities(OrderDetail detail) {
+		if (quantityInStock-detail.getQuantityOrdered()< 0) {
+			throw new ShippingException("There is insufficient stock for one of the products of the order.");
+		} 
 		this.quantityInOrder = this.quantityInOrder - detail.getQuantityOrdered();
 		this.quantityInStock = this.quantityInStock - detail.getQuantityOrdered();
 	}

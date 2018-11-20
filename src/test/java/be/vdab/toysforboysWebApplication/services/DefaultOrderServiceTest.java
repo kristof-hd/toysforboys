@@ -55,7 +55,7 @@ public class DefaultOrderServiceTest {
 	@Test
 	public void shipped() {
 
-		service.setAsShippedActions(1, Status.SHIPPED);
+		service.shipOrder(1);
 		assertEquals(Status.SHIPPED, order.getStatus());
 		assertEquals(LocalDate.now(), order.getShippedDate());
 		verify(repository).read(1);
@@ -69,13 +69,13 @@ public class DefaultOrderServiceTest {
 
 	@Test(expected = OrderNotFoundException.class)
 	public void setAsShippedForNonExistingOrder() {
-		service.setAsShippedActions(-1, Status.SHIPPED);
+		service.shipOrder(-1);
 		verify(repository).read(-1);
 	}
 	
 	@Test(expected=ShippingException.class) 
 	public void orderingTooMuch() {
 		orderDetail.setQuantityOrdered(130); 
-		service.setAsShippedActions(1, Status.SHIPPED);
+		service.shipOrder(1);
 	}
 }

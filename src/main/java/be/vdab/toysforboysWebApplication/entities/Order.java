@@ -3,7 +3,6 @@ package be.vdab.toysforboysWebApplication.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -25,6 +24,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 import be.vdab.toysforboysWebApplication.enums.Status;
 import be.vdab.toysforboysWebApplication.valueobjects.OrderDetail;
 
@@ -39,8 +41,13 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@DateTimeFormat(style="S-")
 	private LocalDate orderDate;
+	
+	@DateTimeFormat(style="S-")
 	private LocalDate requiredDate;
+
+	@DateTimeFormat(style="S-")
 	private LocalDate shippedDate;
 	private String comments;
 
@@ -67,28 +74,8 @@ public class Order implements Serializable {
 		return orderDate;
 	}
 
-	public String getFormattedOrderDateWithSlash() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yy");
-		return orderDate.format(formatter);
-	}
-
-	public String getFormattedOrderDateWithHyphen() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-M-yy");
-		return orderDate.format(formatter);
-	}
-
 	public LocalDate getRequiredDate() {
 		return requiredDate;
-	}
-
-	public String getFormattedRequiredDateWithSlash() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yy");
-		return requiredDate.format(formatter);
-	}
-
-	public String getFormattedRequiredDateWithHyphen() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-M-yy");
-		return requiredDate.format(formatter);
 	}
 
 	public LocalDate getShippedDate() {
@@ -154,8 +141,19 @@ public class Order implements Serializable {
 	protected Order() {
 	}
 
+	@NumberFormat(pattern="#,##0.00")
 	public BigDecimal getTotalValue() {
 		return orderDetails.stream().map(orderdetail -> orderdetail.getValue()).reduce(BigDecimal.ZERO,
 				(vorigTotaal, huidigeWaarde) -> vorigTotaal.add(huidigeWaarde));
 	}
+	
+	public void ship() { 
+		setStatus(Status.SHIPPED);
+		setShippedDate(LocalDate.now());
+		for (OrderDetail detail : orderDetails) {
+			Product product = detail.getProduct();
+			product.adjustQuantities(detail);
+		}
+	}
+
 }

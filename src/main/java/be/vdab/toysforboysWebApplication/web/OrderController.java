@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.toysforboysWebApplication.entities.Order;
 import be.vdab.toysforboysWebApplication.services.OrderService;
-import be.vdab.toysforboysWebApplication.valueobjects.FormattedNumber;
 
 @Controller
 @RequestMapping("orders")
@@ -29,7 +28,6 @@ class OrderController {
 		if (order.isPresent()) {
 			ModelAndView modelAndView = new ModelAndView(VIEW);
 			modelAndView.addObject(order.get());
-			modelAndView.addObject("totalValue", new FormattedNumber(order.get().getTotalValue()));
 			return modelAndView;
 		}
 		return new ModelAndView(REDIRECT_ORDER_NOT_FOUND);

@@ -12,27 +12,11 @@
 </head>
 <body>
 	<h1>Unshipped orders</h1>
-	<c:if test='${numberOfUnshippableOrders>0}'>
-		<span class='error'>
-			Shipping failed for order(s) 
-			<c:forEach items='${unshippableOrders}' var='unshippableOrder' varStatus='status'>
-				<c:if test='${numberOfUnshippableOrders==1}'>${unshippableOrder}</c:if>
-				<c:if test='${numberOfUnshippableOrders==2}'>
-					<c:if test='${status.first}'>${unshippableOrder}</c:if>
-					<c:if test='${status.last}'>aand ${unshippableOrder}</c:if>
-				</c:if>
-				<c:if test='${numberOfUnshippableOrders>2}'>
-					<c:choose>
-						<c:when test='${status.first}'>${unshippableOrder}</c:when>
-						<c:when test='${status.last}'>and ${unshippableOrder}</c:when>
-						<c:otherwise>, ${unshippableOrder}</c:otherwise>
-					</c:choose>
-				</c:if>
-			</c:forEach>
-			, not enough stock.
-		</span>
-	</c:if>	
 	
+	<c:forEach items='${unshippableOrders}' var='unshippableOrder' varStatus='status'>
+		<p class="error">Shipping failed for order ${unshippableOrder}, not enough stock.</p> 
+	</c:forEach> 
+
 	<c:url value='/' var='url'/>
 	<form:form action='${url}' method='post'>
 		<input type='submit' value='Set as shipped'><br><br>
@@ -55,8 +39,8 @@
 						</spring:url>
 						<tr>
 							<td><a href='${url}'>${order.id}</a></td> 
-							<td>${order.formattedOrderDateWithHyphen}</td>
-							<td>${order.formattedRequiredDateWithHyphen}</td>
+							<td><spring:eval expression='order.orderDate'/></td>
+							<td><spring:eval expression='order.requiredDate'/></td>
 							<td>${order.customer.name}</td>																
 							<td>${order.comments}</td>
 							<td><img src='images/${order.status}.png' alt='{order.status}'> ${order.statusAsString}</td>

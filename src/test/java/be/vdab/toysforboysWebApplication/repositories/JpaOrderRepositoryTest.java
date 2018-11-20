@@ -43,10 +43,7 @@ public class JpaOrderRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	@Test
 	public void read() {
 		Order order = repository.read(idVanTestOrder()).get();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate date = LocalDate.parse("2000-01-01", formatter);
-
-		assertEquals(date, order.getOrderDate());
+		assertEquals(LocalDate.of(2000, 1, 1), order.getOrderDate());
 		assertEquals("test", order.getCustomer().getName());
 		assertEquals(0, BigDecimal.TEN.compareTo(order.getTotalValue()));
 	}

@@ -34,7 +34,7 @@ public class DefaultOrderServiceIntegrationTest extends AbstractTransactionalJUn
 	@Test
 	public void setAsShippedActions() {
 		long id = idVanTestOrder();
-		service.setAsShippedActions(id, Status.SHIPPED);
+		service.shipOrder(id);
 		manager.flush();
 		Status newStatus = super.jdbcTemplate.queryForObject("select status from orders where id=?", Status.class, id);
 		assertEquals(Status.SHIPPED, newStatus);

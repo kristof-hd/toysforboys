@@ -39,5 +39,10 @@ public class OrderDetailTest {
 	public void equalDetailsGiveTheSameHashCode() {
 		assertEquals(detail1.hashCode(), againDetail1.hashCode());
 	}
+	
+	@Test
+	public void testOfMethodGetValue() {
+		assertEquals(BigDecimal.valueOf(700), detail1.getValue()); 
+	}
 
 }

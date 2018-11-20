@@ -49,16 +49,9 @@ public class Customer implements Serializable {
 		return country;
 	}
 
-	public void setCountry(Country country) {
-		if (country == null) {
-			throw new NullPointerException();
-		}
-		this.country = country;
-	}
-
 	public Customer(String name, Address address, Country country) {
 		this.name = name;
-		setCountry(country);
+		this.country=country;
 	}
 
 	protected Customer() {

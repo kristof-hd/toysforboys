@@ -49,12 +49,9 @@ public class OrderDetail implements Serializable {
 		return priceEach;
 	}
 
+	@NumberFormat(pattern="#,##0.00")
 	public BigDecimal getValue() {
 		return BigDecimal.valueOf(quantityOrdered).multiply(priceEach);
-	}
-
-	public FormattedNumber getFormattedValue() {
-		return new FormattedNumber(BigDecimal.valueOf(quantityOrdered).multiply(priceEach));
 	}
 
 	public boolean isDeliverable() {

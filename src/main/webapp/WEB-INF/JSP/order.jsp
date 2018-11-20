@@ -13,9 +13,9 @@
 <h1>Order ${order.id}</h1>
 <dl>
 	<dt>Ordered:</dt>
-	<dd>${order.formattedOrderDateWithSlash}</dd> 
+	<dd><spring:eval expression='order.orderDate'/></dd> 
 	<dt>Required:</dt>
-	<dd>${order.formattedRequiredDateWithSlash}</dd> 
+	<dd><spring:eval expression='order.requiredDate'/></dd> 
 	<dt>Customer:</dt>
 	<dd>${order.customer.name} <br> 
 		${order.customer.address.streetAndNumber} <br>
@@ -41,7 +41,7 @@
 								<td>${orderdetail.product.name}</td> 
 								<td><spring:eval expression='orderdetail.priceEach'/></td>
 								<td>${orderdetail.quantityOrdered}</td>
-								<td><spring:eval expression='orderdetail.formattedValue.value'/></td>
+								<td><spring:eval expression='orderdetail.value'/></td>
 								<td>
 										<c:choose>
 											<c:when test='${orderdetail.deliverable}'><span class='check'>&check;</span></c:when>
@@ -54,7 +54,7 @@
 			</table>
 	</dd>
 	<dt>Value:</dt> 
-	<dd><spring:eval expression = 'totalValue.value'/></dd> 
+	<dd><spring:eval expression = 'order.totalValue'/></dd> 
 </dl>
 </body>
 </html>

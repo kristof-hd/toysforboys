@@ -31,8 +31,4 @@ public class Country implements Serializable {
 		return name;
 	}
 
-	public long getVersion() {
-		return version;
-	}
-
 }

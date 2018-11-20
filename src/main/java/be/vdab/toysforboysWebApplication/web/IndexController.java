@@ -1,12 +1,16 @@
 package be.vdab.toysforboysWebApplication.web;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.OptimisticLockException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import be.vdab.toysforboysWebApplication.enums.Status;
 import be.vdab.toysforboysWebApplication.exceptions.ShippingException;
 import be.vdab.toysforboysWebApplication.services.OrderService;
 
@@ -27,21 +31,24 @@ class IndexController {
 	}
 
 	@PostMapping
-	ModelAndView actionsSetAsShipped(long[] shipid) {
+	ModelAndView shipOrders(long[] shipid) {
+		Set<Long> unshippableOrders=new LinkedHashSet<>();
 		ModelAndView modelAndView = new ModelAndView(VIEW);
 		if (shipid != null) {
 			for (long id : shipid) {
 				try {
-					orderService.setAsShippedActions(id, Status.SHIPPED);
-				} catch (ShippingException ex) {
+					orderService.shipOrder(id);
+
+				} catch (ShippingException | OptimisticLockException ex) {
 					ex.getMessage();
+					unshippableOrders.add(id); 
 				}
 			}
+
 		}
 		modelAndView.addObject("orders", orderService.findAllUnshippedOrders());
-		modelAndView.addObject("unshippableOrders", orderService.getUnshippableOrders());
-		modelAndView.addObject("numberOfUnshippableOrders", orderService.getUnshippableOrders().size());
+		modelAndView.addObject("unshippableOrders", unshippableOrders); 
 		return modelAndView;
 	}
-
+	
 }
